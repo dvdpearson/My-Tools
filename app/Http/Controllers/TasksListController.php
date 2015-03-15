@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Task;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
+use Carbon\Carbon;
 
 class TasksListController extends Controller {
 
@@ -43,6 +44,7 @@ class TasksListController extends Controller {
     {
         $task = Input::all();
         if (self::validateTask($task)) {
+            $task['due_date'] = Carbon::parse($task['due_date']);
             Task::create($task);
             $this->tasks = Task::all();
             return view('pages/tasks')->with([

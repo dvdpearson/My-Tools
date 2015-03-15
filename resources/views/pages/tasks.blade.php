@@ -19,14 +19,23 @@
     <h1>Tasks list</h1>
 </div>
 
-<ul>
+<table border="1" cellpadding="15" cellspacing="10">
+    <thead>
+        <td>Name</td>
+        <td colspan="2">Due Date</td>
+    </thead>
 @foreach ($tasks as $task)
-    <li>{{ $task->name }} [<a href="/task/delete/{{ $task->id }}">Delete</a>]</li>
+   <tr>
+       <td>{{ $task->name }}</td>
+       <td>{{ $task->due_date }}</td>
+       <td>[<a href="/task/delete/{{ $task->id }}">Delete</a>]</td>
+   </tr>
 @endforeach
-</ul>
+</table>
 
 <form action="/" name="task" method="post">
-    <input type="text" name="name" />
+    <input type="text" name="name" placeholder="Name" />
+    <input type="text" name="due_date" placeholder="Due Date" class="datepicker" />
     <input type="submit" name="submit" value="Submit" />
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 </form>
