@@ -3,15 +3,23 @@
 @section('content')
 
 
-@if (isset($error) && $error)
+@if (Session::has('error'))
     <div class="alert alert-danger" role="alert">
-        Error has occurred
+        <button type="button" class="close" data-dismiss="alert"
+                aria-hidden="true">
+            &times;
+        </button>
+        {{ Session::get('error')  }}
     </div>
 @endif
 
-@if (isset($success) && $success)
+@if (Session::has('success'))
     <div class="alert alert-success" role="alert">
-        Success
+        <button type="button" class="close" data-dismiss="alert"
+                aria-hidden="true">
+            &times;
+        </button>
+        {{ Session::get('success')  }}
     </div>
 @endif
 
@@ -19,24 +27,49 @@
     <h1>Tasks list</h1>
 </div>
 
-<table border="1" cellpadding="15" cellspacing="10">
-    <thead>
-        <td>Name</td>
-        <td colspan="2">Due Date</td>
-    </thead>
-@foreach ($tasks as $task)
-   <tr>
-       <td>{{ $task->name }}</td>
-       <td>{{ $task->due_date }}</td>
-       <td>[<a href="/task/delete/{{ $task->id }}">Delete</a>]</td>
-   </tr>
-@endforeach
-</table>
+<div class="row">
+    <div class="col-md-6">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th width="80%">Name</th>
+                    <th width="15%">Due Date</th>
+                    <th width="5%"></th>
+                </tr>
+            </thead>
+        @foreach ($tasks as $task)
+           <tr>
+               <td>{{ $task->name }}</td>
+               <td>{{ $task->due_date->format('m/d/Y') }}</td>
+               <td>
+                   <a href="/task/delete/{{ $task->id }}">
+                       <button type="button" class="btn btn-default btn-xs">
+                           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
+                       </button>
+                   </a>
+               </td>
+           </tr>
+        @endforeach
+        </table>
+    </div>
+</div>
 
-<form action="/" name="task" method="post">
-    <input type="text" name="name" placeholder="Name" />
-    <input type="text" name="due_date" placeholder="Due Date" class="datepicker" />
-    <input type="submit" name="submit" value="Submit" />
+<form class="form-horizontal" name="task" method="post" action="/">
+    <div class="form-group">
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <input type="text" class="form-control datepicker" name="due_date" id="due_date" placeholder="Due Date">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Add Task</button>
+        </div>
+    </div>
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 </form>
 @stop

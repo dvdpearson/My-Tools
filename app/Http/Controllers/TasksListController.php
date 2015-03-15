@@ -44,17 +44,16 @@ class TasksListController extends Controller {
     {
         $task = Input::all();
         if (self::validateTask($task)) {
+
             $task['due_date'] = Carbon::parse($task['due_date']);
             Task::create($task);
-            $this->tasks = Task::all();
-            return view('pages/tasks')->with([
-                'tasks' => $this->tasks,
-                'success' => true
+
+            return redirect('/')->with([
+                'success' => 'The task has been successfully created'
             ]);
         } else {
-            return view('pages/tasks')->with([
-                'tasks' => $this->tasks,
-                'error' => true
+            return redirect('/')->with([
+                'error' => 'Please validate your form inputs'
             ]);
         }
     }
