@@ -28,7 +28,7 @@ class TasksListController extends Controller {
 	 */
 	public function index()
 	{
-		return view('taskslist', [ 'tasks' => $this->tasks ]);
+		return view('pages/tasks')->with('tasks', $this->tasks);
 	}
 
     public static function validateTask($task)
@@ -45,9 +45,15 @@ class TasksListController extends Controller {
         if (self::validateTask($task)) {
             Task::create($task);
             $this->tasks = Task::all();
-            return view('taskslist', [ 'tasks' => $this->tasks ]);
+            return view('pages/tasks')->with([
+                'tasks' => $this->tasks,
+                'success' => true
+            ]);
         } else {
-            return view('taskslist', [ 'tasks' => $this->tasks, 'error' => true ]);
+            return view('pages/tasks')->with([
+                'tasks' => $this->tasks,
+                'error' => true
+            ]);
         }
     }
 
