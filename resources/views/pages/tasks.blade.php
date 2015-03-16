@@ -56,17 +56,17 @@
 
 <form class="form-horizontal" name="task" method="post" action="/">
     <div class="form-group">
-        <div class="col-sm-10">
+        <div class="col-md-6">
             <input type="text" class="form-control" id="name" name="name" placeholder="Name">
         </div>
     </div>
     <div class="form-group">
-        <div class="col-sm-10">
+        <div class="col-md-6">
             <input type="text" class="form-control datepicker" name="due_date" id="due_date" placeholder="Due Date">
         </div>
     </div>
     <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
+        <div class="col-md-6">
             <button type="submit" class="btn btn-default">Add Task</button>
         </div>
     </div>
